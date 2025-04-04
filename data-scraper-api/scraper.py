@@ -81,9 +81,12 @@ def start_driver(url):
     return driver
 
 # Example usage
-if __name__ == "__main__":
-    url = "https://www.youtube.com/results?search_query=how+to+tune+a+guitar"  # Replace with the website of your choice
+
+def get_videos_by_search(query, max_results=2):
+    url = f"https://www.youtube.com/results?search_query={query}"  # Replace with the website of your choice
     
+    output = []
+
     driver = start_driver(url)
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
@@ -105,11 +108,9 @@ if __name__ == "__main__":
 
             video_name = filter_elements(children, "yt-formatted-string", "class", "style-scope ytd-video-renderer")
             name = video_name[0].text if video_name else "No name found"
-            print("Video name: ", name)
 
             video_descrip = filter_elements(children, "yt-formatted-string", "class", "metadata-snippet-text style-scope ytd-video-renderer")
             descrip = video_descrip[0].text if video_descrip else "No description found"
-            print("Video description:", name)
 
             video_url = filter_elements(children, "a", "id", "video-title")
 
@@ -129,12 +130,17 @@ if __name__ == "__main__":
                 return video_id
 
             url = "https://www.youtube.com/embed/" + extract_video_id(video_url[0].get_attribute("href"))
-            print("URL : ")
-            print(url)
+            
+
+            video = { 
+                "name": name,
+                "description": descrip,
+                "url": url
+            }
 
             # debugging for the first 5 elements
             count += 1
-            if count == 2:
+            if count == max_results:
                 break
 
 
@@ -143,3 +149,10 @@ if __name__ == "__main__":
         driver.quit()
 
 
+
+if __name__ == "__main__":
+    # Example usage
+    videos = get_videos_by_search("python programming for ai", 2)
+    
+    # Print videos found
+    print(videos)
