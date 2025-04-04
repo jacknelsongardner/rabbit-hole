@@ -150,7 +150,7 @@ def get_videos_by_search(query, max_results=2):
 
 if __name__ == "__main__":
     # Example usage
-    videos = get_videos_by_search("python programming for ai", 2)
+    videos = get_videos_by_search("best ai programs for time saving", 3)
     
     # Print videos found
     print(videos)
