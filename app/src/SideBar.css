@@ -1,0 +1,47 @@
+/* Sidebar container */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #eb8d40;
+    color: white;
+    padding: 20px;
+    position: fixed;
+}
+
+/* Sidebar list */
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Sidebar list items */
+.sidebar-item {
+    padding: 10px;
+    margin: 5px 0 5px 20px; /* Increased left margin */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    user-select: none; /* Prevent text selection */
+    font-size: 20px; /* Increased font size */
+}
+
+/* Hover effect */
+.sidebar-item:hover {
+    background-color: #ee6745;
+}
+.signout-button {
+    background-color: #f44336; /* Red background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Padding for the button */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* No underline */
+    display: block; /* Block display to occupy full width */
+    font-size: 16px; /* Font size */
+    margin-bottom: 50px; /* Push the button to the bottom */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    position: absolute; /* Positioning */
+    bottom: 20px; /* Distance from the bottom */
+    left: 20px; /* Distance from the left */
+    right: 20px; /* Distance from the right */
+}
