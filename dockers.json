@@ -1,0 +1,41 @@
+{
+    "network": "template-network",
+    "dockers": [
+    {
+        "location": "account-db",
+        "running_name": "account-db",
+        "image_name": "account-db",
+        "host_port": 3000,
+        "container_port": 3000
+    },
+    {
+        "location": "account-setup",
+        "running_name": "account-setup",
+        "image_name": "account-setup",
+        "host_port": 3002,
+        "container_port": 3002
+    },
+    {
+        "location": "account-api",
+        "running_name": "account-api",
+        "image_name": "account-api",
+        "host_port": 3001,
+        "container_port": 3001
+    },
+    {
+        "location": "aitools-api",
+        "running_name": "aitools-api",
+        "image_name": "aitools-api",
+        "host_port": 2000,
+        "container_port": 2000
+    },
+    {
+        "location": "data-scraper",
+        "running_name": "data-scraper",
+        "image_name": "data-scraper",
+        "host_port": 4000,
+        "container_port": 4000
+    }
+    ]
+
+}
