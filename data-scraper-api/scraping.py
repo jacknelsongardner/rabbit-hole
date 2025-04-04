@@ -90,7 +90,7 @@ def get_videos_by_search(query, max_results=2):
     driver = start_driver(url)
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
-    time.sleep(5)  # Wait for the page to load
+    time.sleep(4)  # Wait for the page to load
 
     try:
         # Example: Get all elements with a specific attribute containing a value
@@ -138,17 +138,15 @@ def get_videos_by_search(query, max_results=2):
                 "url": url
             }
 
+            output.append(video)
+
             # debugging for the first 5 elements
             count += 1
             if count == max_results:
                 break
-
-
-
     finally:
         driver.quit()
-
-
+        return output
 
 if __name__ == "__main__":
     # Example usage
