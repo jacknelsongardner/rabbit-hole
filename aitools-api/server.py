@@ -1,8 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
-from PIL import Image
-import pytesseract
+
 import os
 import requests
 import json
@@ -18,83 +17,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Configure port
 app.config['SERVER_PORT'] = 2000
 
-@app.route('/ocr/all', methods=['POST'])
-def ocr_all():
-    if 'image' not in request.files:
-        return jsonify({'error': 'No image file provided'}), 400
-
-    file = request.files['image']
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
-
-    try:
-        filename = secure_filename(file.filename)
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(filepath)
-
-        # Perform OCR using pytesseract
-        image = Image.open(filepath)
-        text = pytesseract.image_to_string(image)
-        boxes = pytesseract.image_to_boxes(image)
-
-        # Clean up the uploaded file
-        os.remove(filepath)
-
-        return jsonify({'text': text, 'boxes': boxes}), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-
-@app.route('/ocr/text', methods=['POST'])
-def ocr_text():
-    if 'image' not in request.files:
-        return jsonify({'error': 'No image file provided'}), 400
-
-    file = request.files['image']
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
-
-    try:
-        filename = secure_filename(file.filename)
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(filepath)
-
-        # Perform OCR using pytesseract
-        image = Image.open(filepath)
-        text = pytesseract.image_to_string(image)
-
-        # Clean up the uploaded file
-        os.remove(filepath)
-
-        return jsonify({'text': text}), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-
-@app.route('/ocr/boxes', methods=['POST'])
-def ocr_boxes():
-    if 'image' not in request.files:
-        return jsonify({'error': 'No image file provided'}), 400
-
-    file = request.files['image']
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
-
-    try:
-        filename = secure_filename(file.filename)
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(filepath)
-
-        # Perform OCR using pytesseract
-        image = Image.open(filepath)
-        boxes = pytesseract.image_to_boxes(image)
-
-        # Clean up the uploaded file
-        os.remove(filepath)
-
-        return jsonify({'boxes': boxes}), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/chat/raw', methods=['POST'])
@@ -106,7 +28,7 @@ def chat_raw():
 
     try:
         # Forward the request payload to the JAN API
-        jan_api_url = 'http://host.docker.internal:2001/chat'
+        jan_api_url = 'http://host.docker.internal:1337/v1/chat/completions'
         response = requests.post(jan_api_url, json=request.get_json())
 
         # Return the response from the JAN API
@@ -117,15 +39,11 @@ def chat_raw():
 @app.route('/chat/json', methods=['POST'])
 def chat_with_schema():
 
-
-
-
-
     data = request.get_json()
     if 'instructions' not in data or 'schema' not in data:
         return jsonify({'error': 'Both "message" and "schema" fields are required'}), 400
 
-    jan_url = "http://host.docker.internal:1337/v1/chat/completions"
+    jan_url = "http://localhost:1337/v1/chat/completions"
 
     headers = {
         "Content-Type": "application/json"
