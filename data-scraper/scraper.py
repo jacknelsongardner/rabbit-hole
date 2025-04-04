@@ -14,9 +14,29 @@ from pymongo import *
 import requests
 import time
 
+import urllib.parse
+
 def get_all(attribute, containing, driver):
     elements = driver.find_elements(By.XPATH, f"//*[@{attribute}[contains(., '{containing}')]]")
     return list(elements)  # Ensure it returns a list of selenium objects
+
+from selenium.webdriver.common.by import By
+
+def get_all_by_tag_and_text(driver, tag='*', attribute=None, containing=None, text=None):
+    conditions = []
+
+    if attribute and containing:
+        conditions.append(f"contains(@{attribute}, '{containing}')")
+    
+    if text:
+        conditions.append(f"contains(text(), '{text}')")
+
+    xpath_conditions = ' and '.join(conditions)
+    xpath = f"//{tag}[{xpath_conditions}]" if conditions else f"//{tag}"
+    
+    elements = driver.find_elements(By.XPATH, xpath)
+    return list(elements)
+
 
 def get_parent(element, driver):
     parent = element.find_element(By.XPATH, "./..")
@@ -34,11 +54,18 @@ def get_all_descendants(element):
         descendants.extend(get_all_descendants(child))  # Recursively get all descendants
     return descendants
 
-def filter_elements(elements, attribute, containing):
+def filter_elements(elements, tag=None, attribute=None, containing=None):
+
     filtered_elements = []
     for element in elements:
         try:
-            if element.get_attribute(attribute) and containing in element.get_attribute(attribute):
+            tag_matches = tag is None or element.tag_name.lower() == tag.lower()
+            attr_matches = (
+                attribute is None or (
+                    element.get_attribute(attribute) and containing in element.get_attribute(attribute)
+                )
+            )
+            if tag_matches and attr_matches:
                 filtered_elements.append(element)
         except Exception as e:
             print(f"Error processing element: {e}")
@@ -55,7 +82,7 @@ def start_driver(url):
 
 # Example usage
 if __name__ == "__main__":
-    url = "https://www.target.com/s?searchTerm=avocadoes&tref=typeahead|term|avocadoes"  # Replace with the website of your choice
+    url = "https://www.youtube.com/results?search_query=how+to+tune+a+guitar"  # Replace with the website of your choice
     
     driver = start_driver(url)
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
@@ -64,23 +91,53 @@ if __name__ == "__main__":
 
     try:
         # Example: Get all elements with a specific attribute containing a value
-        elements = get_all("class", "sc-4fd1fd45-0", driver)
-        print(f"Found {len(elements)} elements with the specified attribute.")
+        videos = get_all_by_tag_and_text(driver, tag='ytd-video-renderer', attribute='class', containing='style-scope ytd-item-section-renderer', text=None)
+        
+        print(f"Found {len(videos)} elements with the specified attribute.")
 
-        for element in elements:
+
+        count = 0
+        for video in videos:
 
             # Get parent of the element
-            children = get_all_descendants(element)
+            children = get_all_descendants(video)
 
-            price_container = filter_elements(children, "class", "sc-67b4d80d-3")
 
-            price_info = price_container[0].text if price_container else "No price found"
-            print("Price info:", price_info)
+            video_name = filter_elements(children, "yt-formatted-string", "class", "style-scope ytd-video-renderer")
+            name = video_name[0].text if video_name else "No name found"
+            print("Video name: ", name)
 
-            item_name_container = filter_elements(children, "class", "styles_ndsTruncate__GRSDE")
+            video_descrip = filter_elements(children, "yt-formatted-string", "class", "metadata-snippet-text style-scope ytd-video-renderer")
+            descrip = video_descrip[0].text if video_descrip else "No description found"
+            print("Video description:", name)
 
-            item_name_info = item_name_container[0].text if item_name_container else "No item name found"
-            print("Name info:", item_name_info)
+            video_url = filter_elements(children, "a", "id", "video-title")
+
+            def extract_video_id(url_path):
+
+                # Parse the query string from the URL
+                parsed = urllib.parse.urlparse(url_path)
+                query_params = urllib.parse.parse_qs(parsed.query)
+                
+                # If given just the path (e.g. /watch?v=...), manually extract the query part
+                if not parsed.query and '?' in url_path:
+                    query_string = url_path.split('?', 1)[1]
+                    query_params = urllib.parse.parse_qs(query_string)
+                
+                # Get the video ID
+                video_id = query_params.get('v', [None])[0]
+                return video_id
+
+            url = "https://www.youtube.com/embed/" + extract_video_id(video_url[0].get_attribute("href"))
+            print("URL : ")
+            print(url)
+
+            # debugging for the first 5 elements
+            count += 1
+            if count == 2:
+                break
+
+
 
     finally:
         driver.quit()
