@@ -68,7 +68,7 @@ const Video = ({ videoLink }) => {
   
 
 
-const VideoList = ({ list = videoItems, onVideoClick, onPlusClick, onBookMarkClick,topic}) => {
+const VideoList = ({ list = videoItems, onVideoClick, onPlusClick, onBookMarkClick, onDeleteClick, topic}) => {
     const [query, setQuery] = useState('');
     return (
         <div className="filterable-wrapper" style={{
@@ -94,6 +94,9 @@ const VideoList = ({ list = videoItems, onVideoClick, onPlusClick, onBookMarkCli
                             </button>
                             <button onClick={() => onBookMarkClick(item)}>
                                 Bookmark
+                            </button>
+                            <button onClick={() => onDeleteClick(item)}>
+                                Delete
                             </button>
                         </div>
                     </div>
