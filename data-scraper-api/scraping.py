@@ -130,7 +130,7 @@ def get_videos_by_search(query, max_results=2):
                 return video_id
             
             id = extract_video_id(video_url[0].get_attribute("href"))
-            url = "https://www.youtube.com/embed/" + id
+            url = id
             img = f"https://i.ytimg.com/vi_webp/{id}/maxresdefault.webp"
 
             video = { 
