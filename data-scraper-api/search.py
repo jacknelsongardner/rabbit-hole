@@ -1,7 +1,7 @@
 from jan import *
 from scraping import *
 
-def youtube_search(search, topic, violence, sexuality, bodynegativity, advertisements):
+def youtube_search(search, last, topic, violence, sexuality, bodynegativity, advertisements):
 
     print("Got request to search for videos")
 
@@ -11,8 +11,13 @@ def youtube_search(search, topic, violence, sexuality, bodynegativity, advertise
     videos = []
 
     print("Getting videos")
+
+    # Generate ai optimized query
+    new_query = generate_related_query(search, last, topic)
+
+
     # Parse the response from the JAN API
-    videos = get_videos_by_search(search, 6)
+    videos = get_videos_by_search(new_query, 6)
     print("Got videos: " + str(videos))
 
     # Check if the search is appropriate for the user's criteria, if so, empty the videos list
@@ -23,6 +28,7 @@ def youtube_search(search, topic, violence, sexuality, bodynegativity, advertise
 
     if query_offtrack(topic, search):
         query_distracted = True
+
 
     print("Query distracted: " + str(query_distracted))
 
@@ -43,4 +49,4 @@ def youtube_search(search, topic, violence, sexuality, bodynegativity, advertise
     return videos, query_appropriate, query_distracted
 
 if __name__ == "__main__":
-    print(youtube_search("how to do woodworking", 18, "woodworking"))
+    print(youtube_search("how to do woodworking", "what is woodworking", "woodworking", False, False, False, False))

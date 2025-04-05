@@ -108,9 +108,9 @@ def generate_topic_title(search):
         print("Finished processing generate_topic_title")
 '''
 
-def generate_related_query(last_search, current_topic):
+def generate_related_query(search, last_search, current_topic):
     try:
-        instructions = f': question: generate a search query related to both the last search and current topic : last search was {str(last_search)} and current topic is {str(current_topic)}. Return a short search query in the "query" key, 4-6 words.'
+        instructions = f': question: generate a search query that will get results in matching  last search was {str(last_search)} and current topic is {str(current_topic)} with newest search : {str(search)}:. Newest search should hold highest weight. Return a short search query in the "query" key, 4-6 words. No extra json'
         schema = '{"query": string}'
         result = get_most_common_response(instructions, schema)
         return result['json']['query'] if result else f"more about {current_topic}"
@@ -122,10 +122,8 @@ def generate_related_query(last_search, current_topic):
 
 # Example usage
 if __name__ == "__main__":
-    print(query_offtrack("how to string a guitar", "how eat a house"))
-    print(result_match("how to string a guitar", "string a guitar in 14 steps"))
-    print(result_appropriate(3, "how to kill someone"))
-    #print(generate_topic_title("how to string a guitar"))
-    print(result_is_any("violent", "how to kill someone"))
-    print(result_is_any("sexually explicit", "how to have sex"))
-    print(generate_related_query("how to string a guitar", "guitar"))
+    
+    
+    print(generate_related_query("how to string a guitar", "how to tune a guitar", "guitar maintenance"))
+    
+    

@@ -1,17 +1,21 @@
 import requests
 import json
 
-def search_videos(search_term, age, topic):
+def search_videos(search_term, last, topic):
     # Server URL
     url = 'http://localhost:2001/search'
     
     # Request payload
     payload = {
         'search': search_term,
-        'age': age,
-        'topic': topic
+        'topic': topic,
+        'violence': False,
+        'last': last,
+        'sexuality': False,
+        'bodynegativity': False,
+        'advertisements': False
     }
-    
+
     # Make POST request
     try:
         response = requests.post(url, json=payload)
@@ -31,7 +35,7 @@ def search_videos(search_term, age, topic):
 if __name__ == "__main__":
     result = search_videos(
         search_term="how to string a guitar",
-        age=19,
+        last="how to tune a guitar",
         topic="music"
     )
     
