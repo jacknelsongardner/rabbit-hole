@@ -8,7 +8,7 @@ import json
 
 from search import *
 from jan import *
-from scraping import *
+from mygoogle import *
 
 app = Flask(__name__)
 CORS(app)

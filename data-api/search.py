@@ -1,5 +1,5 @@
 from jan import *
-from scraping import *
+from mygoogle import *
 
 def youtube_search(search, last, topic, violence, sexuality, bodynegativity, advertisements):
 
