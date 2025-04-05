@@ -83,6 +83,7 @@ const Login = ({ setLoggedIn }) => {
           e.preventDefault();
           // Store the hashed passkey
           storePasskey(newPasskey);
+          deleteAllUserData(); // Clear all user data
           setLoggedIn(true); // Simulate user login after resetting passkey
         };
       
