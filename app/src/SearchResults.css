@@ -1,0 +1,22 @@
+.search-item-button {
+    background-color: rgb(57, 57, 57);
+    color: black;
+    border: 1px solid black;
+    padding: 10px 15px;
+    margin: 5px 0;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .search-title {
+    font-weight: bold;
+    display: block;
+  }
+  
+  .search-subtitle {
+    color: grey;
+    font-size: 0.9em;
+  }
+  

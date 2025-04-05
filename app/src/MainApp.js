@@ -19,7 +19,6 @@ import axios from 'axios';
 const MainApp = ({setLoggedIn}) => {
 
 
-  
   const [topic, setTopic] = useState(''); // Use useState to manage page state
 
   const [age, setAge] = useState(18); // Use useState to manage search state
@@ -209,6 +208,7 @@ const MainApp = ({setLoggedIn}) => {
             onPlusClick={onPlusClick}
             onBookMarkClick={addBookMarkClick}
             onDeleteClick={deleteVideoItem}
+            topic ={topic}
           />
         </li>
       </ul>

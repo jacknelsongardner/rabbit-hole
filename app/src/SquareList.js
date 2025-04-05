@@ -56,23 +56,25 @@ const VideoList = ({ list, onVideoClick, onPlusClick, onBookMarkClick, onDeleteC
     return (
         <div className="filterable-wrapper" style={{
             display: 'flex',
-            justifyContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center',
             width: '100%'
         }}>
-            <div className="video-list">
-                
+            {topic && topic!='' && (
+                <p style={{ fontSize: '70px', fontWeight: 'bold', textAlign: 'center', color: 'white'}}>{topic}</p>
+            )}
+
+            <div className="video-list" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 {list.map(item => (
-                    
-                    <div key={item.id} className="thumbnail-container">
+                    <div key={item.id} className="thumbnail-container" style={{ width: '100%', maxWidth: '500px' }}>
                         <h2 className="video-title">{item.title}</h2>
                         <div style={{ 
                             pointerEvents: 'none', 
                             width: '100%',
-                            maxWidth: '500px',
                             display: 'flex',
                             justifyContent: 'center'
                         }}>
-                            <img src={item.img} style={{ maxWidth: '150%' }}/>
+                            <img src={item.img} style={{ width: '100%', maxWidth: '500px' }}/>
                         </div>
                         <p className="video-subtitle">{item.subtitle}</p>
                         <div className="button-container">
@@ -89,12 +91,14 @@ const VideoList = ({ list, onVideoClick, onPlusClick, onBookMarkClick, onDeleteC
                     </div>
                 ))}
 
-                <button 
-                    className="add-button" 
-                    onClick={() => onPlusClick(topic)}
-                >
-                    <span style={{ color: 'white', fontSize: '24px' }}>+</span>
-                </button>
+                {topic && topic!='' && (
+                    <button 
+                        className="add-button" 
+                        onClick={() => onPlusClick(topic)}
+                    >
+                        <span style={{ color: 'white', fontSize: '24px' }}>+</span>
+                    </button>
+                )}
             </div>
         </div>
     );

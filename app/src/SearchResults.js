@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+
+
 const SearchResults = ({ age, topic, addItem }) => {
   const [search, setSearch] = useState('');
   const [violence, setViolence] = useState(false);
@@ -50,7 +52,7 @@ const SearchResults = ({ age, topic, addItem }) => {
 
   return (
     <div style={{ padding: '1rem', maxWidth: '600px', margin: '0 auto' }}>
-      <h2>Search for a Video</h2>
+      <h1>Search for a Video</h1>
 
       <div style={{ marginBottom: '1rem' }}>
         <input
@@ -63,6 +65,8 @@ const SearchResults = ({ age, topic, addItem }) => {
           Search
         </button>
       </div>
+
+        <h2>Ai Filters</h2>
 
       {/* Filter checkboxes */}
       <div style={{ marginBottom: '1rem' }}>
@@ -82,7 +86,7 @@ const SearchResults = ({ age, topic, addItem }) => {
             checked={sexuality}
             onChange={(e) => setSexuality(e.target.checked)}
           />
-          Filter Sexuality
+          Filter Sexuality Explicit Content
         </label>
       </div>
       <div style={{ marginBottom: '1rem' }}>
@@ -110,19 +114,26 @@ const SearchResults = ({ age, topic, addItem }) => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       <ul>
-        {videos.map((video, index) => (
-          <li key={index}>
-            <button onClick={() => handleSelect(video)} style={{ cursor: 'pointer' }}>
-              {typeof video === 'string' ? video : JSON.stringify(video)}
+      {videos.map((video, index) => (
+        <li key={index}>
+            <button onClick={() => handleSelect(video)} className="search-item-button">
+            {typeof video === 'string' ? (
+                video
+            ) : (
+                <p className="search-title">{video.title}</p>
+            )}
             </button>
-          </li>
+        </li>
         ))}
+
       </ul>
 
       {selectedVideo && (
         <div style={{ marginTop: '1rem' }}>
           <h4>Selected Video:</h4>
-          <pre>{JSON.stringify(selectedVideo, null, 2)}</pre>
+          <img src={selectedVideo.img} style={{ width: '300px' }} />
+          <p className="search-title">{selectedVideo.title}</p>
+          <p className="search-subtitle">{selectedVideo.subtitle}</p>
         </div>
       )}
 
