@@ -136,7 +136,9 @@ def get_videos_by_search(query, max_results=2):
             video = { 
                 "name": name,
                 "description": descrip,
-                "url": url
+                "url": url,
+                "img": img,
+
             }
 
             output.append(video)

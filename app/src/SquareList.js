@@ -69,7 +69,7 @@ const VideoList = ({ list, onVideoClick, onPlusClick, onBookMarkClick, onDeleteC
                             display: 'flex',
                             justifyContent: 'center'
                         }}>
-                            <Video videoLink={item.url} />
+                            <img src={item.img} />
                         </div>
                         <div className="button-container">
                             <button onClick={() => onVideoClick(item)}>
