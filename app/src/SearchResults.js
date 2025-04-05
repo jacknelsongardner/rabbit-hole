@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const SearchResults = ({ age, topic, addItem }) => {
+const SearchResults = ({ last, topic, addItem }) => {
   const [search, setSearch] = useState('');
+
   const [violence, setViolence] = useState(false);
   const [sexuality, setSexuality] = useState(false);
   const [bodyNegativity, setBodyNegativity] = useState(false);
@@ -18,7 +19,7 @@ const SearchResults = ({ age, topic, addItem }) => {
     try {
       const response = await axios.post('http://localhost:2001/search', {
         search,
-        age,
+        last,
         topic,
         violence,
         sexuality,
