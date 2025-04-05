@@ -15,66 +15,66 @@ import FruitPage from './FruitPage.js';
 import React, { useState } from 'react';
 
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
+
 
 
 const MainApp = ({setLoggedIn}) => {
 
 
   
-  const [topic, setTopic] = useState('woodworking'); // Use useState to manage page state
+  const [topic, setTopic] = useState(''); // Use useState to manage page state
 
   const [age, setAge] = useState(18); // Use useState to manage search state
 
-
   const [threads, setThreads] = useState({
-    woodworking: [
-      {
-        id: 1,
-        title: 'Overview',
-        subtitle: 'System overview and main metrics',
-        url: 'https://www.youtube.com/embed/eqogbWHoOHs'
-      },
-      {
-        id: 2,
-        title: 'Stats',
-        subtitle: 'Detailed statistics and analytics',
-        url: 'https://www.youtube.com/embed/eqogbWHoOHs'
-      },
-      {
-        id: 3,
-        title: 'Settings',
-        subtitle: 'System configuration and preferences',
-        url: 'https://www.youtube.com/embed/eqogbWHoOHs'
-      }
-    ]
+    
   });
   
+
+  
+
   const [popupVisible, setPopupVisible] = useState(false);
   const [popupChildren, setPopupChildren] = useState(<div></div>);
 
   const [bookmarks, setBookmarks] = useState(
     [
-      {
-        id: 1,
-        title: 'Overview',
-        subtitle: 'System overview and main metrics',
-        url: 'https://www.youtube.com/embed/eqogbWHoOHs'
-      },
-      {
-        id: 2,
-        title: 'Stats',
-        subtitle: 'Detailed statistics and analytics',
-        url: 'https://www.youtube.com/embed/eqogbWHoOHs'
-      },
-      {
-        id: 3,
-        title: 'Settings',
-        subtitle: 'System configuration and preferences',
-        url: 'https://www.youtube.com/embed/eqogbWHoOHs'
-      }
+      
     ]
   );
 
+  // Initialize cookiess
+  const [cookies, setCookie] = useCookies(['topic', 'threads', 'bookmarks']);
+
+  React.useEffect(() => {
+    if (cookies.topic) setTopic(cookies.topic);
+  
+    // Safely parse cookies. If parsing fails, set default values
+    try {
+      if (cookies.threads) setThreads(JSON.parse(cookies.threads));
+    } catch (e) {
+      console.error('Error parsing threads cookie', e);
+      setThreads({ woodworking: [] }); // Provide a fallback empty structure
+    }
+  
+    try {
+      if (cookies.bookmarks) setBookmarks(JSON.parse(cookies.bookmarks));
+    } catch (e) {
+      console.error('Error parsing bookmarks cookie', e);
+      setBookmarks([]); // Provide a fallback empty array
+    }
+  }, []);  
+
+  React.useEffect(() => {
+    // Handle saving data to cookies, ensuring it's valid JSON
+    try {
+      setCookie('topic', topic, { path: '/' });
+      setCookie('threads', JSON.stringify(threads), { path: '/' });
+      setCookie('bookmarks', JSON.stringify(bookmarks), { path: '/' });
+    } catch (e) {
+      console.error('Error saving cookies', e);
+    }
+  }, [topic, threads, bookmarks]);
 
   const onPlusClick = (title) => {
     setPopupVisible(true);
@@ -155,6 +155,14 @@ const MainApp = ({setLoggedIn}) => {
     console.log('Bookmark clicked:', item, popupVisible);
   }
 
+  const onDeleteThreadClick = (item) => {
+    setThreads((prevItems) => {
+      const newItems = { ...prevItems };
+      delete newItems[item];
+      return newItems;
+    });
+  }
+
   const onVideoClick = (item) => {
     setPopupVisible(true);
     setPopupChildren(
@@ -195,6 +203,7 @@ const MainApp = ({setLoggedIn}) => {
             onItemClick={(selectedPage) => setTopic(selectedPage)} 
             setLoggedIn={logout} 
             onAddClick={onAddThreadClick}
+            onDeleteClick={onDeleteThreadClick}
           />
         </li>
         <li>
@@ -206,7 +215,7 @@ const MainApp = ({setLoggedIn}) => {
         </li>
         <li>
           <VideoList 
-            list={threads[topic]}
+            list={Object.keys(threads).includes(topic) ? threads[topic] : []}
             filterFunction={null}
             onVideoClick={onVideoClick}
             onPlusClick={onPlusClick}

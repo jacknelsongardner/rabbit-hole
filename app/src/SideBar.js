@@ -1,6 +1,6 @@
 import './SideBar.css';  // Import the CSS file for styling
 
-const SideBar = ({ items, onItemClick, setLoggedIn, onAddClick, onItemDelete}) => {
+const SideBar = ({ items, onItemClick, setLoggedIn, onAddClick, onDeleteClick}) => {
     
     const handleClick = (item) => {
         if (onItemClick) {
@@ -29,12 +29,22 @@ const SideBar = ({ items, onItemClick, setLoggedIn, onAddClick, onItemDelete}) =
             <ul style={{ width: '80%', margin: '0 auto' }}>
             {items.map((item, index) => (
                 <div key={index}>
-                    <li onClick={() => handleClick(item)} className="sidebar-item" style={{ fontSize: '18px' }}>
-                        <span style={{ float: 'left' }}>{item}</span>
-                        <button onClick={onItemDelete} className="delete-button" style={{ fontSize: '18px' }}>
-                            X
-                        </button>
-                    </li>
+                    <li 
+                            onClick={() => onItemClick(item)} 
+                            className="sidebar-item" 
+                            style={{ fontSize: '18px' }}
+                        >
+                            <span style={{ float: 'left' }}>
+                                {item}
+                            </span>
+                            <button 
+                                onClick={() => onDeleteClick(item)} 
+                                className="delete-button" 
+                                style={{ fontSize: '18px' }}
+                            >
+                                X
+                            </button>
+                        </li>
                 </div>
             ))}
             <li className="sidebar-item">

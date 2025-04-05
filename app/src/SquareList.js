@@ -2,24 +2,7 @@
 import React, { useState } from 'react';
 import './SquareList.css';
 
-const initialItems = [
-    { id: 1, image: 'https://via.placeholder.com/150', title: 'Apple', subtitle: 'Fruit' },
-    { id: 2, image: 'https://via.placeholder.com/150', title: 'Banana', subtitle: 'Yellow fruit' },
-    { id: 3, image: 'https://via.placeholder.com/150', title: 'Carrot', subtitle: 'Vegetable' },
-    { id: 4, image: 'https://via.placeholder.com/150', title: 'Donut', subtitle: 'Dessert' },
-    { id: 5, image: 'https://via.placeholder.com/150', title: 'Eggplant', subtitle: 'Purple veg' },
-    { id: 6, image: 'https://images.immediate.co.uk/production/volatile/sites/30/2020/02/figs-2056729.jpg?quality=90&webp=true&resize=300,272', title: 'Fig', subtitle: 'Fruit' },
-    
-    // Add more items as needed
-  ];
 
-const videoItems = [
-    { id: 1, url: 'https://www.youtube.com/embed/eqogbWHoOHs', title: 'Apple', subtitle: 'Fruit' },
-    { id: 2, url: 'https://www.youtube.com/embed/eqogbWHoOHs', title: 'Banana', subtitle: 'Yellow fruit' },
-    { id: 3, url: 'https://www.youtube.com/embed/eqogbWHoOHs', title: 'Carrot', subtitle: 'Vegetable' },
-    { id: 4, url: 'https://www.youtube.com/embed/eqogbWHoOHs', title: 'Donut', subtitle: 'Dessert' },
-    // Add more items as needed
-];
   
 
 
@@ -68,7 +51,7 @@ const Video = ({ videoLink }) => {
   
 
 
-const VideoList = ({ list = videoItems, onVideoClick, onPlusClick, onBookMarkClick, onDeleteClick, topic}) => {
+const VideoList = ({ list, onVideoClick, onPlusClick, onBookMarkClick, onDeleteClick, topic}) => {
     const [query, setQuery] = useState('');
     return (
         <div className="filterable-wrapper" style={{
