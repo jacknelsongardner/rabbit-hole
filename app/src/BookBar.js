@@ -1,7 +1,7 @@
 
-import './SideBar.css';  // Import the CSS file for styling
+import './BookBar.css';  // Import the CSS file for styling
 
-const SideBar = ({ items, onItemClick, setLoggedIn, setItems}) => {
+const BookBar = ({ items, onItemClick, setLoggedIn, setItems}) => {
     
     const handleClick = (item) => {
         if (onItemClick) {
@@ -21,7 +21,7 @@ const SideBar = ({ items, onItemClick, setLoggedIn, setItems}) => {
     };
 
     return (
-        <div className="sidebar ${sidebarclass}" >
+        <div className="bookbar " >
             <ul>
             {items.map((item, index) => (
             <div key={index}>
@@ -43,7 +43,5 @@ const SideBar = ({ items, onItemClick, setLoggedIn, setItems}) => {
         );
 };
 
-
-
-export default SideBar;
+export default BookBar;
 

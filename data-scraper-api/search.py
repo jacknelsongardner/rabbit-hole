@@ -12,12 +12,13 @@ def youtube_search(search, age, topic):
 
     print("Getting videos")
     # Parse the response from the JAN API
-    videos = get_videos_by_search(search, 3)
+    videos = get_videos_by_search(search, 6)
     print("Got videos: " + str(videos))
 
     # Check if the search is appropriate for the user's age
-    if age < 18: 
-        if not result_appropriate(age, search):
+    
+    if age < 18:
+        if result_is_any("violent", search) or result_is_any("sexual", search) or result_is_any("drugs", search):
             videos = []
             query_appropriate = False
 
@@ -31,7 +32,7 @@ def youtube_search(search, age, topic):
     # Filter videos based on age appropriateness and relevance to topic
     print(videos)
     for video in videos:
-        if result_appropriate(age, video["name"]) or not result_match(search, video["name"]):
+        if result_is_any("violent", search) or result_is_any("sexual", search):
             videos.remove(video)
             print("Filtered out video: " + video["name"])
         else : 
@@ -43,4 +44,4 @@ def youtube_search(search, age, topic):
     return videos, query_appropriate, query_distracted
 
 if __name__ == "__main__":
-    youtube_search("python vs c++", 18, "programming", True)
+    print(youtube_search("how to do woodworking", 18, "woodworking"))

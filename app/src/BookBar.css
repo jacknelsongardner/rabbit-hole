@@ -1,16 +1,16 @@
 /* Sidebar container */
-.sidebar {
+.bookbar {
     width: 250px;
     height: 100vh;
     background-color: #eb8d40;
     color: white;
     padding: 20px;
     position: fixed;
-    left: 0; /* Changed to left */
+    right: 0;
 }
 
 /* Sidebar list */
-.sidebar ul {
+.bookbar ul {
     list-style-type: none;
     padding: 0;
 }

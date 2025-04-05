@@ -1,7 +1,7 @@
 import requests
 import json
 
-def search_videos(search_term, age, topic, first_search):
+def search_videos(search_term, age, topic):
     # Server URL
     url = 'http://localhost:2001/search'
     
@@ -30,10 +30,9 @@ def search_videos(search_term, age, topic, first_search):
 # Example usage
 if __name__ == "__main__":
     result = search_videos(
-        search_term="shinto temple tour",
+        search_term="how to string a guitar",
         age=19,
-        topic="education",
-        first_search=True
+        topic="music"
     )
     
     if result:

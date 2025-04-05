@@ -58,27 +58,42 @@ def result_appropriate(age, result):
     finally:
         print("Finished processing result_appropriate")
 
+def result_is_any(any, result):
+    try:
+        instructions = ': question: is the search result' + str(any) +' : search result is: ' + str(result) + 'answer the question boolean true or false. "'+ str(any) +'" key should coorespond to that.' 
+        schema = '{"' + str(any) + '": boolean}'
+        return get_most_common_response(instructions, schema)['json'][str(any)]
+    
+    except Exception as e:
+        print(f"Error in result_appropriate: {e}")
+        return False
+    finally:
+        print("Finished processing result_appropriate")
+
 def result_match(query, result):
     try:
-        instructions = ': question: is search result good result query ? : search: ' + str(query) + ' and result: ' + str(result) + 'answer the question boolean true or false. "match" key should coorespond to that.'
-        schema = '{"match": boolean}'
-        return get_most_common_response(instructions, schema)['json']['match']
+        instructions = ': question: is search result reasonable for query ? : search: ' + str(query) + ' and result: ' + str(result) + 'answer the question boolean true or false. "reasonable" key should coorespond to that.'
+        schema = '{"reasonable": boolean}'
+        return get_most_common_response(instructions, schema)['json']['reasonable']
     except Exception as e:
         print(f"Error in result_match: {e}")
         return False
     finally:
         print("Finished processing result_match")
 
+
 def query_offtrack(first, last):
     try:
-        instructions = ': question:  has user gotten distracted? : first search: ' + str(first) + '.  last search: ' + str(last) + '. answer the question boolean true or false. "distracted" key should coorespond to that.'
-        schema = '{"distracted": boolean}'
-        return get_most_common_response(instructions, schema)['json']['distracted']
+        instructions = ': question:  is search within given topic? : topic: ' + str(first) + '.  search: ' + str(last) + '. answer the question boolean true or false. "offtopic" key should coorespond to that.'
+        schema = '{"offtopic": boolean}'
+        return get_most_common_response(instructions, schema)['json']['offtopic']
     except Exception as e:
         print(f"Error in getting_offtrack: {e}")
         return False
     finally:
         print("Finished processing getting_offtrack")
+
+'''
 
 def generate_topic_title(search):
     try:
@@ -91,6 +106,7 @@ def generate_topic_title(search):
         return "Unknown Topic"
     finally:
         print("Finished processing generate_topic_title")
+'''
 
 def generate_related_query(last_search, current_topic):
     try:
@@ -109,5 +125,7 @@ if __name__ == "__main__":
     print(query_offtrack("how to string a guitar", "how eat a house"))
     print(result_match("how to string a guitar", "string a guitar in 14 steps"))
     print(result_appropriate(3, "how to kill someone"))
-    print(generate_topic_title("how to string a guitar"))
+    #print(generate_topic_title("how to string a guitar"))
+    print(result_is_any("violent", "how to kill someone"))
+    print(result_is_any("sexually explicit", "how to have sex"))
     print(generate_related_query("how to string a guitar", "guitar"))
