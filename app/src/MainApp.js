@@ -6,15 +6,26 @@ import { SquareList, SearchBar, VideoList, Video, SquareListItem } from './Squar
 import SideBar from './SideBar.js';
 import BookBar from './BookBar.js';
 
+
+
 import Popup from './Popup.js';
 
 import FruitPage from './FruitPage.js';
 
 import React, { useState } from 'react';
 
+import axios from 'axios';
+
 
 const MainApp = ({setLoggedIn}) => {
-  const [page, setPage] = useState('woodworking'); // Use useState to manage page state
+
+
+  
+  const [topic, setTopic] = useState('woodworking'); // Use useState to manage page state
+
+  const [age, setAge] = useState(18); // Use useState to manage search state
+
+
   const [threads, setThreads] = useState({
     woodworking: [
       {
@@ -67,7 +78,7 @@ const MainApp = ({setLoggedIn}) => {
 
 
   const onPlusClick = (title) => {
-    console.log(title);
+    
   }
 
   const addBookMarkClick = (item) => {
@@ -77,11 +88,38 @@ const MainApp = ({setLoggedIn}) => {
   const deleteVideoItem = (item) => {
     setThreads((prevItems) => {
       const newItems = { ...prevItems };
-      const currentThread = newItems[page];
-      newItems[page] = currentThread.filter((i) => i.id !== item.id);
+      const currentThread = newItems[topic];
+      newItems[topic] = currentThread.filter((i) => i.id !== item.id);
       return newItems;
     });
   }
+
+  const onAddThreadClick = () => {
+    setPopupVisible(true);
+    setPopupChildren(
+      <div>
+        <h2>Add New Thread</h2>
+        <input 
+          type="text" 
+          placeholder="Enter thread name"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && e.target.value.trim()) {
+              addThread(e.target.value.trim());
+              setPopupVisible(false);
+            }
+          }}
+        />
+        <p>Press Enter to add thread</p>
+      </div>
+    );
+  };
+
+  const addThread = (item) => {
+    setThreads((prevItems) => ({
+      ...prevItems,
+      [item]: []
+    }));
+  };
 
   const onBookMarkClick = (item) => {
     setPopupVisible(true);
@@ -141,9 +179,9 @@ const MainApp = ({setLoggedIn}) => {
 
           <SideBar 
             items={Object.keys(threads)} 
-            onItemClick={(selectedPage) => setPage(selectedPage)} 
+            onItemClick={(selectedPage) => setTopic(selectedPage)} 
             setLoggedIn={logout} 
-            setItems={setThreads}
+            onAddClick={onAddThreadClick}
           />
         </li>
         <li>
@@ -155,7 +193,7 @@ const MainApp = ({setLoggedIn}) => {
         </li>
         <li>
           <VideoList 
-            list={threads[page]}
+            list={threads[topic]}
             filterFunction={null}
             onVideoClick={onVideoClick}
             onPlusClick={onPlusClick}
