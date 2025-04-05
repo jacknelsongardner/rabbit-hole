@@ -6,9 +6,11 @@
     color: white;
     padding: 20px;
     position: fixed;
-    left: 0;
+    
     top: 0;
     bottom: 0;
+
+    left: 0;
 }
 
 
@@ -28,14 +30,20 @@
     user-select: none; /* Prevent text selection */
     font-size: 20px; /* Increased font size */
     text-align: right; /* Added right alignment */
+
+    border-radius: 10px; /* Added border radius for hover effect */
+
 }
 
 /* Hover effect */
 .sidebar-item:hover {
-    background-color: #ee6745;
+    background-color: #6d6d6d !important;
+    border-radius: 10px; /* Added border radius for hover effect */
 }
+
 .signout-button {
-    background-color: #f44336; /* Red background */
+    
+    background-color: #848484 !important;; /* Red background */
     color: white; /* White text */
     border: none; /* No border */
     padding: 10px 20px; /* Padding for the button */
@@ -51,6 +59,11 @@
     left: 20px; /* Distance from the left */
     right: 20px; /* Distance from the right */
 }
+
+.signout-button:hover {
+    background-color: #ff0000 !important; /* Darker red */
+    box-shadow: 0 0 10px #ff0000;
+  }
 
 .delete-button {
     background-color: #dc3545;

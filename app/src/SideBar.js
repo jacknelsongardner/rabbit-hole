@@ -50,12 +50,11 @@ const SideBar = ({ items, onItemClick, setLoggedIn, onAddClick, onDeleteClick}) 
                     +
                 </button>
             </div>
+            
+            <button onClick={handleSignOut} className="signout-button">
+                Lock
+            </button>
 
-            <li className="sidebar-item">
-                <button onClick={handleSignOut} className="signout-button">
-                    Lock
-                </button>
-            </li>
             </ul>
         </div>
     );

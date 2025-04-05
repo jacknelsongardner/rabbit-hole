@@ -35,7 +35,7 @@ const BookBar = ({ items, onItemClick, setItems}) => {
                         </li>
                     </div>
                 ))}
-                <li className="sidebar-item"></li>
+                
             </ul>
         </div>
     );
