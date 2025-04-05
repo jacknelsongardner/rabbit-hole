@@ -60,17 +60,21 @@ const VideoList = ({ list, onVideoClick, onPlusClick, onBookMarkClick, onDeleteC
             width: '100%'
         }}>
             <div className="video-list">
+                
                 {list.map(item => (
-                    <div key={item.id} className="video-container">
+                    
+                    <div key={item.id} className="thumbnail-container">
+                        <h2 className="video-title">{item.title}</h2>
                         <div style={{ 
                             pointerEvents: 'none', 
                             width: '100%',
-                            maxWidth: '600px',
+                            maxWidth: '500px',
                             display: 'flex',
                             justifyContent: 'center'
                         }}>
-                            <img src={item.img} />
+                            <img src={item.img} style={{ maxWidth: '150%' }}/>
                         </div>
+                        <p className="video-subtitle">{item.subtitle}</p>
                         <div className="button-container">
                             <button onClick={() => onVideoClick(item)}>
                                 Play

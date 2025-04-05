@@ -2,12 +2,14 @@
 .bookbar {
     width: 250px;
     height: 100vh;
-    background-color: #000000;
+    background-color: #282828;
     color: white;
     padding: 20px;
     position: fixed;
-    border: 3px solid white;
-    border-radius: 15px;
+    
+    top: 0;
+    bottom: 0;
+
     right: 0;
 }
 
