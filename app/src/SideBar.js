@@ -1,28 +1,12 @@
 import './SideBar.css';  // Import the CSS file for styling
 
-const SideBar = ({ items, onItemClick, setLoggedIn, setItems}) => {
+const SideBar = ({ items, onItemClick, setLoggedIn, onAddClick, onItemDelete}) => {
     
     const handleClick = (item) => {
         if (onItemClick) {
             onItemClick(item);
         }
     };
-
-    const handleAddThread = () => {
-        const threadName = `Thread ${Object.keys(items).length + 1}`;
-        setItems((prevItems) => ({
-            ...prevItems,
-            [threadName]: []
-        }));
-    };
-
-    const handleDelete = (item) => {
-        setItems((prevItems) => {
-            const newItems = { ...prevItems };
-            delete newItems[item];
-            return newItems;
-        });
-    }
 
     const handleSignOut = () => {
         setLoggedIn(); // Assuming loggedIn is a function to update login state
@@ -32,7 +16,7 @@ const SideBar = ({ items, onItemClick, setLoggedIn, setItems}) => {
         <div className="sidebar " style={{ textAlign: 'center' }}>
             <p style={{ fontSize: '24px', fontWeight: 'bold' }}>Threads</p>
             <button 
-                onClick={handleAddThread} 
+                onClick={onAddClick} 
                 className="add-button"
                 style={{ 
                     fontSize: '18px', 
@@ -47,7 +31,7 @@ const SideBar = ({ items, onItemClick, setLoggedIn, setItems}) => {
                 <div key={index}>
                     <li onClick={() => handleClick(item)} className="sidebar-item" style={{ fontSize: '18px' }}>
                         <span style={{ float: 'left' }}>{item}</span>
-                        <button onClick={() => handleDelete(item)} className="delete-button" style={{ fontSize: '18px' }}>
+                        <button onClick={onItemDelete} className="delete-button" style={{ fontSize: '18px' }}>
                             X
                         </button>
                     </li>
