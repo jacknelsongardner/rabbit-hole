@@ -21,37 +21,7 @@ const videoItems = [
     // Add more items as needed
 ];
   
-const SquareListItem = ({ item, onClick }) => (
-    <div className="square-item" key={item.id} onClick={() => onClick(item)}>
-        <img src={item.image} alt={item.title} className="square-image" />
-        <div className="square-text">
-            <div className="square-title">{item.title}</div>
-            <div className="square-subtitle">{item.subtitle}</div>
-        </div>
-    </div>
-);
 
-const VideoListItem = ({ item, onClick }) => (
-    <div className="square-item" key={item.id} onClick={() => onClick(item)}>
-        <div className="square-image">
-            <div style={{ pointerEvents: 'none' }}>
-                <iframe
-                    src={item.url}
-                    title={item.title}
-                    width="100%"
-                    height="100%"
-                    frameBorder="0"
-                    style={{ pointerEvents: 'none' }}
-                    loading="lazy"
-                />
-            </div>
-        </div>
-        <div className="square-text">
-            <div className="square-title">{item.title}</div>
-            <div className="square-subtitle">{item.subtitle}</div>
-        </div>
-    </div>
-);
 
 
 
@@ -65,23 +35,6 @@ const SearchBar = ({ query, onQueryChange }) => (
     />
 );
 
-const SquareList = ({ list = initialItems, filterFunction = null, onClick}) => {
-    const [query, setQuery] = useState('');
-
-    const filteredItems = filterFunction
-        ? list.filter(item => filterFunction(item, query))
-        : list;
-
-    return (
-        <div className="filterable-wrapper">
-            <div className="square-list">
-                {filteredItems.map(item => (
-                    <SquareListItem key={item.id} item={item} onClick={onClick}/>
-                ))}
-            </div>
-        </div>
-    );
-};
 
 
 const Video = ({ videoLink }) => {
@@ -115,23 +68,40 @@ const Video = ({ videoLink }) => {
   
 
 
-const VideoList = ({ list = videoItems, onVideoClick, onPlusClick, topic}) => {
+const VideoList = ({ list = videoItems, onVideoClick, onPlusClick, onBookMarkClick,topic}) => {
     const [query, setQuery] = useState('');
-
     return (
-        <div className="filterable-wrapper">
+        <div className="filterable-wrapper" style={{
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%'
+        }}>
             <div className="video-list">
                 {list.map(item => (
-                    <div key={item.id} className="video-item"> 
-                        <VideoListItem item={item} onClick={onVideoClick} />
-                        
+                    <div key={item.id} className="video-container">
+                        <div style={{ 
+                            pointerEvents: 'none', 
+                            width: '100%',
+                            maxWidth: '600px',
+                            display: 'flex',
+                            justifyContent: 'center'
+                        }}>
+                            <Video videoLink={item.url} />
+                        </div>
+                        <div className="button-container">
+                            <button onClick={() => onVideoClick(item)}>
+                                Play
+                            </button>
+                            <button onClick={() => onBookMarkClick(item)}>
+                                Bookmark
+                            </button>
+                        </div>
                     </div>
                 ))}
 
                 <button 
                     className="add-button" 
                     onClick={() => onPlusClick(topic)}
-                    
                 >
                     <span style={{ color: 'white', fontSize: '24px' }}>+</span>
                 </button>
@@ -140,4 +110,4 @@ const VideoList = ({ list = videoItems, onVideoClick, onPlusClick, topic}) => {
     );
 };
 
-export { SquareList, SquareListItem, SearchBar, Video, VideoList };
+export {  SearchBar, Video, VideoList };
