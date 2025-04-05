@@ -15,7 +15,6 @@ import FruitPage from './FruitPage.js';
 import React, { useState } from 'react';
 
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
 
 
 
@@ -31,7 +30,7 @@ const MainApp = ({setLoggedIn}) => {
     
   });
   
-
+  const [loadSafe, setLoadSafe] = useState(false);
   
 
   const [popupVisible, setPopupVisible] = useState(false);
@@ -43,40 +42,31 @@ const MainApp = ({setLoggedIn}) => {
     ]
   );
 
-  // Initialize cookiess
-  const [cookies, setCookie] = useCookies(['topic', 'threads', 'bookmarks']);
+  
+  
+  React.useEffect(() => {
+    const savedTopic = localStorage.getItem('topic') || '';
+    const savedThreads = JSON.parse(localStorage.getItem('threads')) || {};
+    const savedBookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+    console.log('Loading from localStorage:', { savedTopic, savedThreads, savedBookmarks });
+    
+    setTopic(savedTopic);
+    setThreads(savedThreads);
+    setBookmarks(savedBookmarks);
+
+    setLoadSafe(true);
+  }, []);
 
   React.useEffect(() => {
-    if (cookies.topic) setTopic(cookies.topic);
-  
-    // Safely parse cookies. If parsing fails, set default values
-    try {
-      if (cookies.threads) setThreads(JSON.parse(cookies.threads));
-    } catch (e) {
-      console.error('Error parsing threads cookie', e);
-      setThreads({ woodworking: [] }); // Provide a fallback empty structure
+    if (loadSafe) {
+      console.log('Saving to localStorage:', { topic, threads, bookmarks });
+      localStorage.setItem('topic', topic);
+      localStorage.setItem('threads', JSON.stringify(threads));
+      localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     }
-  
-    try {
-      if (cookies.bookmarks) setBookmarks(JSON.parse(cookies.bookmarks));
-    } catch (e) {
-      console.error('Error parsing bookmarks cookie', e);
-      setBookmarks([]); // Provide a fallback empty array
-    }
-  }, []);  
+  }, [topic, threads, bookmarks, loadSafe]);
 
-  React.useEffect(() => {
-    // Handle saving data to cookies, ensuring it's valid JSON
-    try {
-      setCookie('topic', topic, { path: '/' });
-      setCookie('threads', JSON.stringify(threads), { path: '/' });
-      setCookie('bookmarks', JSON.stringify(bookmarks), { path: '/' });
-    } catch (e) {
-      console.error('Error saving cookies', e);
-    }
-  }, [topic, threads, bookmarks]);
-
-  const onPlusClick = (title) => {
+  const onPlusClick = () => {
     setPopupVisible(true);
     setPopupChildren(
       <div>
