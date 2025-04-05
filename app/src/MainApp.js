@@ -74,6 +74,15 @@ const MainApp = ({setLoggedIn}) => {
     setBookmarks((prevItems) => [...prevItems, item]);
   }
 
+  const deleteVideoItem = (item) => {
+    setThreads((prevItems) => {
+      const newItems = { ...prevItems };
+      const currentThread = newItems[page];
+      newItems[page] = currentThread.filter((i) => i.id !== item.id);
+      return newItems;
+    });
+  }
+
   const onBookMarkClick = (item) => {
     setPopupVisible(true);
     setPopupChildren(
@@ -151,6 +160,7 @@ const MainApp = ({setLoggedIn}) => {
             onVideoClick={onVideoClick}
             onPlusClick={onPlusClick}
             onBookMarkClick={addBookMarkClick}
+            onDeleteClick={deleteVideoItem}
           />
         </li>
       </ul>
