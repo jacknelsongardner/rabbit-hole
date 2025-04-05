@@ -3,6 +3,7 @@ import urllib.parse
 
 # Set up your YouTube API key
 api_key = "AIzaSyBsPizG5UAxLQ3Gp1YiZS7MicudO9OGebo"  # Replace with your actual API key
+backup = "AIzaSyAbRTM291eMwc6DzvNWWsl_zAJcDha4LoY" # Just in case
 youtube = build("youtube", "v3", developerKey=api_key)
 
 def extract_video_id(url_path):
