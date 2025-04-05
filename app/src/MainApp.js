@@ -97,18 +97,18 @@ const MainApp = ({setLoggedIn}) => {
     setPopupVisible(true);
     setPopupChildren(
       <div>
-        <h1>{item.title}</h1>
-        <div className="video-container">
-            <iframe 
-                width="560" 
-                height="300" 
-                src={item.url} 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen
-            />
-        </div>
-        <p>{item.subtitle}</p>
+      <h1>{item.title}</h1>
+      <div className="video-container">
+        <iframe 
+          width="840" 
+          height="450" 
+          src={item.url} 
+          frameBorder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowFullScreen
+        />
+      </div>
+      <p>{item.subtitle}</p>
       </div>
     );
   };

@@ -1,12 +1,11 @@
 import React from 'react';
 import './Popup.css';
-
 const Popup = ({ setIsVisible, children }) => {
   if (!setIsVisible) return null; // Don't render anything if it's not visible
 
   return (
     <div className="popup-overlay">
-      <div className="popup-container">
+      <div className="popup-container" style={{ width: '80%', maxWidth: '800px' }}>
         <button className="popup-close-btn" onClick={() => setIsVisible(false)}>
           X
         </button>
