@@ -70,7 +70,9 @@ const MainApp = ({setLoggedIn}) => {
     console.log(title);
   }
 
-  
+  const addBookMarkClick = (item) => {
+    setBookmarks((prevItems) => [...prevItems, item]);
+  }
 
   const onBookMarkClick = (item) => {
     setPopupVisible(true);
@@ -148,6 +150,7 @@ const MainApp = ({setLoggedIn}) => {
             filterFunction={null}
             onVideoClick={onVideoClick}
             onPlusClick={onPlusClick}
+            onBookMarkClick={addBookMarkClick}
           />
         </li>
       </ul>
