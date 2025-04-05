@@ -21,8 +21,6 @@ const MainApp = ({setLoggedIn}) => {
 
   const [topic, setTopic] = useState(''); // Use useState to manage page state
 
-  const [age, setAge] = useState(18); // Use useState to manage search state
-
   const [threads, setThreads] = useState({
     
   });
@@ -65,21 +63,29 @@ const MainApp = ({setLoggedIn}) => {
 
   const onPlusClick = () => {
     setPopupVisible(true);
+    console.log(threads);
+  
+    const safeLast = (threads.topic && threads.topic.length > 0)
+    ? threads.topic[threads.topic.length - 1]
+    : "";
+
+    console.log('Safe last:', safeLast);
+  
     setPopupChildren(
       <div>
-      <SearchResults 
-        age={age} 
-        topic={topic} 
-        addItem={(item) => {
-        setThreads((prevItems) => ({
-          ...prevItems,
-          [topic]: [...prevItems[topic], item]
-        }))
-        }}
-      />
+        <SearchResults 
+          last={safeLast}
+          topic={topic} 
+          addItem={(item) => {
+            setThreads((prevItems) => ({
+              ...prevItems,
+              [topic]: [...prevItems[topic], item]
+            }))
+          }}
+        />
       </div>
     );
-    };
+  };
 
   const addBookMarkClick = (item) => {
     setBookmarks((prevItems) => [...prevItems, item]);
@@ -91,7 +97,7 @@ const MainApp = ({setLoggedIn}) => {
     const deepEqual = (a, b) => {
       return JSON.stringify(a) === JSON.stringify(b);
     };
-    
+
     setThreads((prevItems) => {
       const newItems = { ...prevItems };
       const currentThread = newItems[topic];
@@ -130,22 +136,10 @@ const MainApp = ({setLoggedIn}) => {
   };
 
   const onBookMarkClick = (item) => {
-    setPopupVisible(true);
-    setPopupChildren(
-      <div>
-        <h1>{item.title}</h1>
-        <div className="video-container">
-            <iframe 
-                width="560" 
-                height="300" 
-                src={item.url} 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen
-            />
-        </div>
-        <p>{item.subtitle}</p>
-      </div>
+    window.open(
+      "https://id.420129.xyz/embed/" + item.url,
+      '_blank',
+      'width=840,height=480,menubar=no,toolbar=no,location=no,status=no,scrollbars=no'
     );
     console.log('Bookmark clicked:', item, popupVisible);
   }
@@ -159,23 +153,29 @@ const MainApp = ({setLoggedIn}) => {
   }
 
   const onVideoClick = (item) => {
-    setPopupVisible(true);
-    setPopupChildren(
-      <div>
-      <h1>{item.title}</h1>
-      <div className="video-container">
-        <iframe 
-          width="840" 
-          height="450" 
-          src={item.url} 
-          frameBorder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowFullScreen
-        />
-      </div>
-      <p>{item.subtitle}</p>
-      </div>
+    window.open(
+      "https://id.420129.xyz/embed/" + item.url,
+      '_blank',
+      'width=840,height=480,menubar=no,toolbar=no,location=no,status=no,scrollbars=no'
     );
+
+    // setPopupVisible(true);
+    // setPopupChildren(
+    //   <div>
+    //   <h1>{item.title}</h1>
+    //   <div className="video-container">
+    //     <iframe 
+    //       width="840" 
+    //       height="450" 
+    //       src={"https://id.420129.xyz/embed/" + item.url} 
+    //       frameBorder="0" 
+    //       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    //       allowFullScreen
+    //     />
+    //   </div>
+    //   <p>{item.subtitle}</p>
+    //   </div>
+    // );
   };
 
   const logout = () => {
