@@ -15,12 +15,15 @@ def youtube_search(search, topic, violence, sexuality, bodynegativity, advertise
     videos = get_videos_by_search(search, 6)
     print("Got videos: " + str(videos))
 
-    # Check if the search is appropriate for the user's age
+    # Check if the search is appropriate for the user's criteria, if so, empty the videos list
+    if (violence and result_is_any("violent", search)) or (sexuality and result_is_any("sexual", search)) or (bodynegativity and result_is_any("bodynegativety", search)) or (advertisements and result_is_any("advertisement", search)):
+        videos = []
 
     print("Search apropriate: " + str(query_appropriate))
 
     if query_offtrack(topic, search):
         query_distracted = True
+
     print("Query distracted: " + str(query_distracted))
 
 

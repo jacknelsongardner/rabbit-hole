@@ -85,14 +85,22 @@ const MainApp = ({setLoggedIn}) => {
     setBookmarks((prevItems) => [...prevItems, item]);
   }
 
+  
+  
   const deleteVideoItem = (item) => {
+    const deepEqual = (a, b) => {
+      return JSON.stringify(a) === JSON.stringify(b);
+    };
+    
     setThreads((prevItems) => {
       const newItems = { ...prevItems };
       const currentThread = newItems[topic];
-      newItems[topic] = currentThread.filter((i) => i.id !== item.id);
+  
+      newItems[topic] = currentThread.filter((i) => !deepEqual(i, item));
+  
       return newItems;
     });
-  }
+  };
 
   const onAddThreadClick = () => {
     setPopupVisible(true);
