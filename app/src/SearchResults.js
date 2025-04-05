@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const VideoSearch = ({ age, topic, addItem }) => {
+const SearchResults = ({ age, topic, addItem }) => {
   const [search, setSearch] = useState('');
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -9,49 +9,40 @@ const VideoSearch = ({ age, topic, addItem }) => {
   const [error, setError] = useState(null);
 
   const searchVideos = async () => {
+    setLoading(true);
+    setError(null);
     try {
-      setLoading(true);
-      setError(null);
-
       const response = await axios.post('http://localhost:2001/search', {
         search,
         age,
         topic
       });
-
       setVideos(response.data.videos || []);
-    } catch (error) {
-      console.error('Error searching videos:', error);
-      setError('Failed to fetch videos');
+    } catch (err) {
+      console.error('Search failed:', err);
+      setError('Failed to fetch videos.');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleAdd = (video) => {
-    if (!selectedVideo) {
-      setSelectedVideo(video);
-      if (addItem) {
-        addItem(video);
-      }
-    }
+  const handleSelect = (video) => {
+    setSelectedVideo(video);
+    addItem?.(video);
   };
 
   return (
     <div style={{ padding: '1rem', maxWidth: '600px', margin: '0 auto' }}>
-      <h2>Search for a Video (Topic: {topic}, Age: {age})</h2>
+      <h2>Search for a Video</h2>
 
       <div style={{ marginBottom: '1rem' }}>
-        <label>
-          Search:
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            style={{ marginLeft: '0.5rem' }}
-          />
-        </label>
-        <button onClick={searchVideos} style={{ marginLeft: '1rem' }}>
+        <input
+          type="text"
+          value={search}
+          placeholder="Search..."
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button onClick={searchVideos} style={{ marginLeft: '0.5rem' }}>
           Search
         </button>
       </div>
@@ -61,29 +52,31 @@ const VideoSearch = ({ age, topic, addItem }) => {
 
       <ul>
         {videos.map((video, index) => (
-          <li key={index} style={{ marginBottom: '0.5rem' }}>
-            {typeof video === 'string' ? video : JSON.stringify(video)}
-            {!selectedVideo && (
-              <button onClick={() => handleAdd(video)} style={{ marginLeft: '1rem' }}>
-                Add
-              </button>
-            )}
+          <li key={index}>
+            <button onClick={() => handleSelect(video)} style={{ cursor: 'pointer' }}>
+              {typeof video === 'string' ? video : JSON.stringify(video)}
+            </button>
           </li>
         ))}
       </ul>
 
       {selectedVideo && (
-        <>
-          <h3>Selected Video</h3>
-          <div style={{ background: '#f2f2f2', padding: '1rem', borderRadius: '8px' }}>
-            {typeof selectedVideo === 'string'
-              ? selectedVideo
-              : JSON.stringify(selectedVideo)}
-          </div>
-        </>
+        <div style={{ marginTop: '1rem' }}>
+          <h4>Selected Video:</h4>
+          <pre>{JSON.stringify(selectedVideo, null, 2)}</pre>
+        </div>
       )}
+
+    {selectedVideo && (
+        <button 
+            onClick={() => addItem(selectedVideo)}
+            style={{ marginTop: '1rem', padding: '0.5rem 1rem' }}
+        >
+            Add to List
+        </button>
+    )}
     </div>
   );
 };
 
-export default VideoSearch;
+export default SearchResults;

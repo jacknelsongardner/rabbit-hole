@@ -6,7 +6,7 @@ import { SquareList, SearchBar, VideoList, Video, SquareListItem } from './Squar
 import SideBar from './SideBar.js';
 import BookBar from './BookBar.js';
 
-
+import SearchResults from './SearchResults.js';
 
 import Popup from './Popup.js';
 
@@ -76,10 +76,23 @@ const MainApp = ({setLoggedIn}) => {
   );
 
 
-
   const onPlusClick = (title) => {
-    
-  }
+    setPopupVisible(true);
+    setPopupChildren(
+      <div>
+      <SearchResults 
+        age={age} 
+        topic={topic} 
+        addItem={(item) => {
+        setThreads((prevItems) => ({
+          ...prevItems,
+          [topic]: [...prevItems[topic], item]
+        }))
+        }}
+      />
+      </div>
+    );
+    };
 
   const addBookMarkClick = (item) => {
     setBookmarks((prevItems) => [...prevItems, item]);
