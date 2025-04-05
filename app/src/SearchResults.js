@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-
-
 const SearchResults = ({ age, topic, addItem }) => {
   const [search, setSearch] = useState('');
   const [violence, setViolence] = useState(false);
@@ -51,7 +49,17 @@ const SearchResults = ({ age, topic, addItem }) => {
   };
 
   return (
-    <div style={{ padding: '1rem', maxWidth: '600px', margin: '0 auto' }}>
+    <div
+      style={{
+        padding: '1rem',
+        maxWidth: '600px',
+        margin: '0 auto',
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        overflowY: 'auto', // Makes the whole container scrollable
+      }}
+    >
       <h1>Search for a Video</h1>
 
       <div style={{ marginBottom: '1rem' }}>
@@ -66,67 +74,71 @@ const SearchResults = ({ age, topic, addItem }) => {
         </button>
       </div>
 
-        <h2>Ai Filters</h2>
+      <h2>AI Filters</h2>
 
-      {/* Filter checkboxes */}
-      <div style={{ marginBottom: '1rem' }}>
-        <label>
-          <input
-            type="checkbox"
-            checked={violence}
-            onChange={(e) => setViolence(e.target.checked)}
-          />
-          Filter Violence
-        </label>
-      </div>
-      <div style={{ marginBottom: '1rem' }}>
-        <label>
-          <input
-            type="checkbox"
-            checked={sexuality}
-            onChange={(e) => setSexuality(e.target.checked)}
-          />
-          Filter Sexuality Explicit Content
-        </label>
-      </div>
-      <div style={{ marginBottom: '1rem' }}>
-        <label>
-          <input
-            type="checkbox"
-            checked={bodyNegativity}
-            onChange={(e) => setBodyNegativity(e.target.checked)}
-          />
-          Filter Body Negativity
-        </label>
-      </div>
-      <div style={{ marginBottom: '1rem' }}>
-        <label>
-          <input
-            type="checkbox"
-            checked={advertisements}
-            onChange={(e) => setAdvertisements(e.target.checked)}
-          />
-          Filter Advertisements
-        </label>
+      {/* Filter checkboxes container with scroll */}
+      <div style={{ maxHeight: '150px', overflowY: 'auto', marginBottom: '1rem' }}>
+        <div style={{ marginBottom: '1rem' }}>
+          <label>
+            <input
+              type="checkbox"
+              checked={violence}
+              onChange={(e) => setViolence(e.target.checked)}
+            />
+            Filter Violence
+          </label>
+        </div>
+        <div style={{ marginBottom: '1rem' }}>
+          <label>
+            <input
+              type="checkbox"
+              checked={sexuality}
+              onChange={(e) => setSexuality(e.target.checked)}
+            />
+            Filter Sexuality Explicit Content
+          </label>
+        </div>
+        <div style={{ marginBottom: '1rem' }}>
+          <label>
+            <input
+              type="checkbox"
+              checked={bodyNegativity}
+              onChange={(e) => setBodyNegativity(e.target.checked)}
+            />
+            Filter Body Negativity
+          </label>
+        </div>
+        <div style={{ marginBottom: '1rem' }}>
+          <label>
+            <input
+              type="checkbox"
+              checked={advertisements}
+              onChange={(e) => setAdvertisements(e.target.checked)}
+            />
+            Filter Advertisements
+          </label>
+        </div>
       </div>
 
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      <ul>
-      {videos.map((video, index) => (
-        <li key={index}>
-            <button onClick={() => handleSelect(video)} className="search-item-button">
-            {typeof video === 'string' ? (
-                video
-            ) : (
-                <p className="search-title">{video.title}</p>
-            )}
-            </button>
-        </li>
-        ))}
-
-      </ul>
+      {/* Scrollable video list */}
+      <div style={{ flex: '1', overflowY: 'auto' }}>
+        <ul>
+          {videos.map((video, index) => (
+            <li key={index}>
+              <button onClick={() => handleSelect(video)} className="search-item-button">
+                {typeof video === 'string' ? (
+                  video
+                ) : (
+                  <p className="search-title">{video.title}</p>
+                )}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {selectedVideo && (
         <div style={{ marginTop: '1rem' }}>
@@ -138,11 +150,11 @@ const SearchResults = ({ age, topic, addItem }) => {
       )}
 
       {selectedVideo && (
-        <button 
-            onClick={() => addItem(selectedVideo)}
-            style={{ marginTop: '1rem', padding: '0.5rem 1rem' }}
+        <button
+          onClick={() => addItem(selectedVideo)}
+          style={{ marginTop: '1rem', padding: '0.5rem 1rem' }}
         >
-            Add to List
+          Add to List
         </button>
       )}
     </div>

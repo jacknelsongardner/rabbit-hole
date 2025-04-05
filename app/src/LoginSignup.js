@@ -68,7 +68,7 @@ const Login = ({ setLoggedIn }) => {
             className="submit-btn"
             style={{ display: "block", margin: "20px auto" }}
           >
-            Enter passkey
+            Unlock
           </button>
         </form>
       </div>
@@ -82,8 +82,9 @@ const Login = ({ setLoggedIn }) => {
         const handleSignUp = (e) => {
           e.preventDefault();
           // Store the hashed passkey
-          storePasskey(newPasskey);
+
           deleteAllUserData(); // Clear all user data
+          storePasskey(newPasskey);
           setLoggedIn(true); // Simulate user login after resetting passkey
         };
       

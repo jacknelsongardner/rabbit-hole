@@ -1,0 +1,37 @@
+# Start from Alpine base image
+FROM alpine:3.18
+
+# Install dependencies
+RUN apk add --no-cache \
+    bash \
+    git \
+    crystal \
+    shards \
+    yaml-dev \
+    sqlite-dev \
+    postgresql-dev \
+    pcre-dev \
+    gcompat \
+    libxml2-dev \
+    libevent-dev
+
+# Clone the Invidious repo
+RUN git clone https://github.com/iv-org/invidious.git /opt/invidious
+
+# Fix the issue in the `config.cr` file
+RUN sed -i 's/present?/any?/' /opt/invidious/src/invidious/config.cr
+
+# Set the working directory
+WORKDIR /opt/invidious
+
+# Install dependencies
+RUN shards install
+
+# Build the Invidious app
+RUN crystal build src/invidious.cr --release
+
+# Expose the port that Invidious runs on
+EXPOSE 3000
+
+# Start Invidious
+CMD ["./invidious"]

@@ -19,6 +19,10 @@
     max-width: 500px;
     width: 80%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+
+    max-height: 90vh;
+    overflow-y: auto;
   }
   
   .popup-close-btn {
@@ -35,4 +39,3 @@
   .popup-content {
     margin-top: 20px;
   }
-  
