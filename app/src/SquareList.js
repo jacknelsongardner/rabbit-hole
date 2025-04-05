@@ -12,6 +12,14 @@ const initialItems = [
     
     // Add more items as needed
   ];
+
+const videoItems = [
+    { id: 1, url: 'https://www.youtube.com/embed/eqogbWHoOHs', title: 'Apple', subtitle: 'Fruit' },
+    { id: 2, url: 'https://www.youtube.com/embed/eqogbWHoOHs', title: 'Banana', subtitle: 'Yellow fruit' },
+    { id: 3, url: 'https://www.youtube.com/embed/eqogbWHoOHs', title: 'Carrot', subtitle: 'Vegetable' },
+    { id: 4, url: 'https://www.youtube.com/embed/eqogbWHoOHs', title: 'Donut', subtitle: 'Dessert' },
+    // Add more items as needed
+];
   
 const SquareListItem = ({ item, onClick }) => (
     <div className="square-item" key={item.id} onClick={() => onClick(item)}>
@@ -22,6 +30,30 @@ const SquareListItem = ({ item, onClick }) => (
         </div>
     </div>
 );
+
+const VideoListItem = ({ item, onClick }) => (
+    <div className="square-item" key={item.id} onClick={() => onClick(item)}>
+        <div className="square-image">
+            <div style={{ pointerEvents: 'none' }}>
+                <iframe
+                    src={item.url}
+                    title={item.title}
+                    width="100%"
+                    height="100%"
+                    frameBorder="0"
+                    style={{ pointerEvents: 'none' }}
+                    loading="lazy"
+                />
+            </div>
+        </div>
+        <div className="square-text">
+            <div className="square-title">{item.title}</div>
+            <div className="square-subtitle">{item.subtitle}</div>
+        </div>
+    </div>
+);
+
+
 
 const SearchBar = ({ query, onQueryChange }) => (
     <input
@@ -51,4 +83,61 @@ const SquareList = ({ list = initialItems, filterFunction = null, onClick}) => {
     );
 };
 
-export { SquareList, SquareListItem, SearchBar };
+
+const Video = ({ videoLink }) => {
+    // Extract the video ID from a YouTube URL if it's a YouTube link
+    
+    const videoUrl = videoLink;
+  
+    return (
+      <div style={{ 
+        position: 'relative', 
+        width: '100%', 
+        maxWidth: '400px', 
+        height: '300px',
+        backgroundColor: '#000', 
+        borderRadius: '8px',
+        overflow: 'hidden',
+      }}>
+        <iframe
+          src={videoUrl}
+          title="Video Example"
+          width="100%"
+          height="100%"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          style={{ position: 'absolute', top: 0, left: 0 }}
+        />
+      </div>
+    );
+  };
+  
+
+
+const VideoList = ({ list = videoItems, onVideoClick, onPlusClick, topic}) => {
+    const [query, setQuery] = useState('');
+
+    return (
+        <div className="filterable-wrapper">
+            <div className="video-list">
+                {list.map(item => (
+                    <div key={item.id} className="video-item"> 
+                        <VideoListItem item={item} onClick={onVideoClick} />
+                        
+                    </div>
+                ))}
+
+                <button 
+                    className="add-button" 
+                    onClick={() => onPlusClick(topic)}
+                    
+                >
+                    <span style={{ color: 'white', fontSize: '24px' }}>+</span>
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export { SquareList, SquareListItem, SearchBar, Video, VideoList };

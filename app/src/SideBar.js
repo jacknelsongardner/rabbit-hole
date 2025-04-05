@@ -21,19 +21,20 @@ const SideBar = ({ items, onItemClick, setLoggedIn, setItems}) => {
     };
 
     return (
-        <div className="sidebar ${sidebarclass}" >
-            <ul>
-            {items.map((item, index) => (
-            <div key={index}>
-            <li onClick={() => handleClick(item)} className="sidebar-item">
-            <span style={{ float: 'left' }}>{item}</span>
-            <button onClick={() => handleDelete(item)} className="delete-button">
-                X
-            </button>
-            </li>
-            </div>
-            ))}
-            <li className="sidebar-item">
+        <div className="sidebar " style={{ textAlign: 'center' }}>
+        <p style={{ fontSize: '24px', fontWeight: 'bold' }}>Threads</p>
+        <ul style={{ width: '80%', margin: '0 auto' }}>
+        {items.map((item, index) => (
+        <div key={index}>
+        <li onClick={() => handleClick(item)} className="sidebar-item" style={{ fontSize: '18px' }}>
+        <span style={{ float: 'left' }}>{item}</span>
+        <button onClick={() => handleDelete(item)} className="delete-button" style={{ fontSize: '18px' }}>
+        X
+        </button>
+        </li>
+        </div>
+        ))}
+        <li className="sidebar-item">
             <button onClick={handleSignOut} className="signout-button">
             Sign Out
             </button>
