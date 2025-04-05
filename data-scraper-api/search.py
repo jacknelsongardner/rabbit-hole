@@ -27,7 +27,7 @@ def youtube_search(search, topic, violence, sexuality, bodynegativity, advertise
     # Filter videos based on age appropriateness and relevance to topic
     print(videos)
     for video in videos:
-        if result_is_any("violent", video["name"]) or result_is_any("sexual", video["name"]) or result_is_any("bodynegativety", video["name"]) or result_is_any("advertisement", video["name"]):
+        if (violence and result_is_any("violent", video["name"])) or (sexuality and result_is_any("sexual", video["name"])) or (bodynegativity and result_is_any("bodynegativety", video["name"])) or (advertisements and result_is_any("advertisement", video["name"])):
             videos.remove(video)
             print("Filtered out video: " + video["name"])
         else : 
@@ -35,6 +35,7 @@ def youtube_search(search, topic, violence, sexuality, bodynegativity, advertise
 
     # Convert the response to JSON
     print("Videos JSON: " + str(videos))
+    
 
     return videos, query_appropriate, query_distracted
 

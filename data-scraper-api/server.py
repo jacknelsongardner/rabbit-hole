@@ -32,8 +32,8 @@ def search():
         return jsonify({'error': 'Both "message" and "schema" fields are required'}), 400
 
     search = data['search']
-    
-    vilence = data['violence']
+
+    violence = data['violence']
     sexuality = data['sexuality']
     bodynegativity = data['bodynegativity']
     advertisements = data['advertisements']
@@ -45,7 +45,7 @@ def search():
 
     try:
         
-        videos, appropriate, distracted = youtube_search(search, age, topic)
+        videos, appropriate, distracted = youtube_search(search, topic, violence, sexuality, bodynegativity, advertisements)
 
         try:
             # Convert the response to JSON

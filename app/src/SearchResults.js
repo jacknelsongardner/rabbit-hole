@@ -3,6 +3,10 @@ import axios from 'axios';
 
 const SearchResults = ({ age, topic, addItem }) => {
   const [search, setSearch] = useState('');
+  const [violence, setViolence] = useState(false);
+  const [sexuality, setSexuality] = useState(false);
+  const [bodyNegativity, setBodyNegativity] = useState(false);
+  const [advertisements, setAdvertisements] = useState(false);
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -15,19 +19,22 @@ const SearchResults = ({ age, topic, addItem }) => {
       const response = await axios.post('http://localhost:2001/search', {
         search,
         age,
-        topic
+        topic,
+        violence,
+        sexuality,
+        bodynegativity: bodyNegativity,
+        advertisements
       });
-  
+
       // Process the videos to rename keys
       const processedVideos = (response.data.videos || []).map(video => {
         return {
           ...video,
           title: video.name,    // Rename 'name' to 'title'
           subtitle: video.description,  // Rename 'description' to 'subtitle'
-          
         };
       });
-  
+
       setVideos(processedVideos);
     } catch (err) {
       console.error('Search failed:', err);
@@ -36,7 +43,6 @@ const SearchResults = ({ age, topic, addItem }) => {
       setLoading(false);
     }
   };
-  
 
   const handleSelect = (video) => {
     setSelectedVideo(video);
@@ -56,6 +62,48 @@ const SearchResults = ({ age, topic, addItem }) => {
         <button onClick={searchVideos} style={{ marginLeft: '0.5rem' }}>
           Search
         </button>
+      </div>
+
+      {/* Filter checkboxes */}
+      <div style={{ marginBottom: '1rem' }}>
+        <label>
+          <input
+            type="checkbox"
+            checked={violence}
+            onChange={(e) => setViolence(e.target.checked)}
+          />
+          Filter Violence
+        </label>
+      </div>
+      <div style={{ marginBottom: '1rem' }}>
+        <label>
+          <input
+            type="checkbox"
+            checked={sexuality}
+            onChange={(e) => setSexuality(e.target.checked)}
+          />
+          Filter Sexuality
+        </label>
+      </div>
+      <div style={{ marginBottom: '1rem' }}>
+        <label>
+          <input
+            type="checkbox"
+            checked={bodyNegativity}
+            onChange={(e) => setBodyNegativity(e.target.checked)}
+          />
+          Filter Body Negativity
+        </label>
+      </div>
+      <div style={{ marginBottom: '1rem' }}>
+        <label>
+          <input
+            type="checkbox"
+            checked={advertisements}
+            onChange={(e) => setAdvertisements(e.target.checked)}
+          />
+          Filter Advertisements
+        </label>
       </div>
 
       {loading && <p>Loading...</p>}
@@ -78,14 +126,14 @@ const SearchResults = ({ age, topic, addItem }) => {
         </div>
       )}
 
-    {selectedVideo && (
+      {selectedVideo && (
         <button 
             onClick={() => addItem(selectedVideo)}
             style={{ marginTop: '1rem', padding: '0.5rem 1rem' }}
         >
             Add to List
         </button>
-    )}
+      )}
     </div>
   );
 };
