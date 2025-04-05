@@ -13,13 +13,7 @@ return (
     <div className="form-container" style={{ margin: "20px 0", textAlign: "center" }}>
         <h2 style={{ margin: "20px 0" }}>Login</h2>
         <form onSubmit={handleLogin} style={{ margin: "20px 0" }}>
-            <input
-                type="text"
-                placeholder="Username"
-                className="input-field"
-                required
-                style={{ display: "block", margin: "10px auto" }}
-            />
+            
             <input
                 type="password"
                 placeholder="Password"
@@ -32,7 +26,7 @@ return (
                 className="submit-btn"
                 style={{ display: "block", margin: "20px auto" }}
             >
-                Login
+                Enter passkey
             </button>
         </form>
     </div>
@@ -40,6 +34,8 @@ return (
 };
 // Sign Up Component
 const SignUp = ({ setLoggedIn }) => {
+    
+    
     const [selectedPoints, setSelectedPoints] = useState([]);
 
     const handleSignUp = (e) => {
@@ -60,61 +56,21 @@ const SignUp = ({ setLoggedIn }) => {
         <div className="form-container" style={{ margin: "20px 0", textAlign: "center" }}>
             <h2 style={{ margin: "20px 0" }}>Sign Up</h2>
             <form onSubmit={handleSignUp} style={{ margin: "20px 0" }}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    className="input-field"
-                    required
-                    style={{ display: "block", margin: "10px auto" }}
-                />
-                <input
-                    type="email"
-                    placeholder="Email"
-                    className="input-field"
-                    required
-                    style={{ display: "block", margin: "10px auto" }}
-                />
+                
                 <input
                     type="password"
-                    placeholder="Password"
+                    placeholder="Your new passkey"
                     className="input-field"
                     required
                     style={{ display: "block", margin: "10px auto" }}
                 />
-
-                <div className="checkbox-group" style={{ margin: "20px 0" }}>
-                    <label style={{ display: "block", margin: "10px auto" }}>
-                        <input
-                            type="checkbox"
-                            onChange={() => handleCheckboxChange("Receive Updates")}
-                            checked={selectedPoints.includes("Receive Updates")}
-                        />
-                        Receive Updates
-                    </label>
-                    <label style={{ display: "block", margin: "10px auto" }}>
-                        <input
-                            type="checkbox"
-                            onChange={() => handleCheckboxChange("Agree to Terms")}
-                            checked={selectedPoints.includes("Agree to Terms")}
-                        />
-                        Agree to Terms
-                    </label>
-                    <label style={{ display: "block", margin: "10px auto" }}>
-                        <input
-                            type="checkbox"
-                            onChange={() => handleCheckboxChange("Newsletter Subscription")}
-                            checked={selectedPoints.includes("Newsletter Subscription")}
-                        />
-                        Newsletter Subscription
-                    </label>
-                </div>
 
                 <button
                     type="submit"
                     className="submit-btn"
                     style={{ display: "block", margin: "20px auto" }}
                 >
-                    Sign Up
+                    Reset Code
                 </button>
             </form>
         </div>
@@ -124,6 +80,8 @@ const SignUp = ({ setLoggedIn }) => {
 // LoginSignUp Component to handle toggling between login and sign up
 const LoginSignUp = ({ setLoggedIn }) => { // Destructure setLoggedIn from props
     const [isSignUp, setIsSignUp] = useState(false);
+
+    
 
     return (
         <div className="auth-container" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>

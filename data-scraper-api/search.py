@@ -1,7 +1,7 @@
 from jan import *
 from scraping import *
 
-def youtube_search(search, age, topic):
+def youtube_search(search, topic, violence, sexuality, bodynegativity, advertisements):
 
     print("Got request to search for videos")
 
@@ -16,11 +16,6 @@ def youtube_search(search, age, topic):
     print("Got videos: " + str(videos))
 
     # Check if the search is appropriate for the user's age
-    
-    if age < 18:
-        if result_is_any("violent", search) or result_is_any("sexual", search) or result_is_any("drugs", search):
-            videos = []
-            query_appropriate = False
 
     print("Search apropriate: " + str(query_appropriate))
 
@@ -32,7 +27,7 @@ def youtube_search(search, age, topic):
     # Filter videos based on age appropriateness and relevance to topic
     print(videos)
     for video in videos:
-        if result_is_any("violent", search) or result_is_any("sexual", search):
+        if result_is_any("violent", video["name"]) or result_is_any("sexual", video["name"]) or result_is_any("bodynegativety", video["name"]) or result_is_any("advertisement", video["name"]):
             videos.remove(video)
             print("Filtered out video: " + video["name"])
         else : 

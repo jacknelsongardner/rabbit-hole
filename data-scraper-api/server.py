@@ -28,11 +28,16 @@ def search():
     print("Got request to search for videos")
 
     data = request.get_json()
-    if 'search' not in data or 'age' not in data or 'topic' not in data:
+    if 'search' not in data or 'violence' not in data or 'sexuality' not in data or 'bodynegativity' not in data or 'advertisements' not in data or 'topic' not in data:
         return jsonify({'error': 'Both "message" and "schema" fields are required'}), 400
 
     search = data['search']
-    age = data['age']
+    
+    vilence = data['violence']
+    sexuality = data['sexuality']
+    bodynegativity = data['bodynegativity']
+    advertisements = data['advertisements']
+
     topic = data['topic']
 
     appropriate = True

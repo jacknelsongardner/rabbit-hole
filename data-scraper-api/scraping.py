@@ -128,9 +128,10 @@ def get_videos_by_search(query, max_results=2):
                 # Get the video ID
                 video_id = query_params.get('v', [None])[0]
                 return video_id
-
-            url = "https://www.youtube.com/embed/" + extract_video_id(video_url[0].get_attribute("href"))
             
+            id = extract_video_id(video_url[0].get_attribute("href"))
+            url = "https://inv.nadeko.net/embed/" + id
+            img = f"https://i.ytimg.com/vi_webp/{id}/maxresdefault.webp"
 
             video = { 
                 "name": name,

@@ -15,17 +15,7 @@ const SideBar = ({ items, onItemClick, setLoggedIn, onAddClick, onDeleteClick}) 
     return (
         <div className="sidebar " style={{ textAlign: 'center' }}>
             <p style={{ fontSize: '24px', fontWeight: 'bold' }}>Threads</p>
-            <button 
-                onClick={onAddClick} 
-                className="add-button"
-                style={{ 
-                    fontSize: '18px', 
-                    margin: '10px',
-                    padding: '5px 15px'
-                }}
-            >
-                + Add Thread
-            </button>
+            
             <ul style={{ width: '80%', margin: '0 auto' }}>
             {items.map((item, index) => (
                 <div key={index}>
@@ -47,9 +37,23 @@ const SideBar = ({ items, onItemClick, setLoggedIn, onAddClick, onDeleteClick}) 
                         </li>
                 </div>
             ))}
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <button 
+                    onClick={onAddClick} 
+                    className="add-button"
+                    style={{ 
+                        fontSize: '18px', 
+                        margin: '10px',
+                        padding: '5px 15px'
+                    }}
+                >
+                    +
+                </button>
+            </div>
+
             <li className="sidebar-item">
                 <button onClick={handleSignOut} className="signout-button">
-                    Sign Out
+                    Lock
                 </button>
             </li>
             </ul>

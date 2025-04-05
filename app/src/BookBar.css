@@ -2,12 +2,15 @@
 .bookbar {
     width: 250px;
     height: 100vh;
-    background-color: #4e40eb;
+    background-color: #000000;
     color: white;
     padding: 20px;
     position: fixed;
+    border: 3px solid white;
+    border-radius: 15px;
     right: 0;
 }
+
 
 /* Sidebar list */
 .bookbar ul {
