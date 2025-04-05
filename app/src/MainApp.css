@@ -1,0 +1,31 @@
+.proxy-button {
+    background-color: #44444400 !important; /* Green */
+    border: 2px solid #39ff14 !important;
+    color: white !important; /* White text */
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+.proxy-button:hover {
+    background-color: #2be010 !important; /* Slightly darker green */
+    color: white !important;
+    box-shadow: 0 0 10px #39ff14;
+}
+
+.youtube-button {
+    background-color: red !important; /* Red */
+    border: none;
+    color: white !important; /* White text */
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.youtube-button:hover {
+    background-color: #b00303 !important; /* Darker red */
+    color: white !important;
+    box-shadow: 0 0 10px #ff0000;
+}

@@ -136,12 +136,66 @@ const MainApp = ({setLoggedIn}) => {
   };
 
   const onBookMarkClick = (item) => {
+    popupProxyYoutubeChoice(item);
+  }
+
+  const onVideoClick = (item) => {
+    popupProxyYoutubeChoice(item);
+  };
+
+  const popupProxyYoutubeChoice = (item) => {
+
+    setPopupVisible(true);
+    setPopupChildren(
+      <div>
+      <h2>Choose how to watch</h2>
+      <button style={{
+          backgroundColor: "green",
+          border: '2px solid #39ff14',
+          color: 'white',
+          padding: '8px 15px',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease'
+          }} 
+          className="proxy-button" 
+          onClick={() => openLinkProxy(item)}>Watch via Proxy
+      </button>
+
+      <button style={{
+          backgroundColor: 'red',
+          border: 'none', 
+          color: 'white',
+          padding: '8px 15px',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease'
+          }}
+          className="youtube-button"
+          onClick={() => openLinkYoutube(item)}>Watch on YouTube
+      </button>
+
+      <p>Note: YouTube will expose your IP address to Google. The proxy is more private but may be less reliable.</p>
+      </div>
+    );
+  }
+
+  
+
+  const openLinkProxy = (item) => {
     window.open(
       "https://id.420129.xyz/embed/" + item.url,
       '_blank',
       'width=840,height=480,menubar=no,toolbar=no,location=no,status=no,scrollbars=no'
     );
-    console.log('Bookmark clicked:', item, popupVisible);
+  }
+
+  const openLinkYoutube = (item) => {
+    window.open(
+      "https://www.youtube.com/embed/" + item.url,
+      '_blank',
+      'width=840,height=480,menubar=no,toolbar=no,location=no,status=no,scrollbars=no'
+    );
   }
 
   const onDeleteThreadClick = (item) => {
@@ -152,31 +206,7 @@ const MainApp = ({setLoggedIn}) => {
     });
   }
 
-  const onVideoClick = (item) => {
-    window.open(
-      "https://id.420129.xyz/embed/" + item.url,
-      '_blank',
-      'width=840,height=480,menubar=no,toolbar=no,location=no,status=no,scrollbars=no'
-    );
 
-    // setPopupVisible(true);
-    // setPopupChildren(
-    //   <div>
-    //   <h1>{item.title}</h1>
-    //   <div className="video-container">
-    //     <iframe 
-    //       width="840" 
-    //       height="450" 
-    //       src={"https://id.420129.xyz/embed/" + item.url} 
-    //       frameBorder="0" 
-    //       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    //       allowFullScreen
-    //     />
-    //   </div>
-    //   <p>{item.subtitle}</p>
-    //   </div>
-    // );
-  };
 
   const logout = () => {
     setLoggedIn(false); // Set loggedIn to false when logging out
