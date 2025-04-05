@@ -17,7 +17,18 @@ const SearchResults = ({ age, topic, addItem }) => {
         age,
         topic
       });
-      setVideos(response.data.videos || []);
+  
+      // Process the videos to rename keys
+      const processedVideos = (response.data.videos || []).map(video => {
+        return {
+          ...video,
+          title: video.name,    // Rename 'name' to 'title'
+          subtitle: video.description,  // Rename 'description' to 'subtitle'
+          
+        };
+      });
+  
+      setVideos(processedVideos);
     } catch (err) {
       console.error('Search failed:', err);
       setError('Failed to fetch videos.');
@@ -25,6 +36,7 @@ const SearchResults = ({ age, topic, addItem }) => {
       setLoading(false);
     }
   };
+  
 
   const handleSelect = (video) => {
     setSelectedVideo(video);
