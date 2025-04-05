@@ -28,7 +28,6 @@ const SearchResults = ({ age, topic, addItem }) => {
 
   const handleSelect = (video) => {
     setSelectedVideo(video);
-    addItem?.(video);
   };
 
   return (
