@@ -24,7 +24,7 @@ def youtube_search(search, last, topic, violence, sexuality, bodynegativity, adv
     if (violence and result_is_any("violent", search)) or (sexuality and result_is_any("sexual", search)) or (bodynegativity and result_is_any("bodynegativety", search)) or (advertisements and result_is_any("advertisement", search)):
         videos = []
 
-    print("Search apropriate: " + str(query_appropriate))
+    print("Search appropriate: " + str(query_appropriate))
 
     if query_offtrack(topic, search):
         query_distracted = True

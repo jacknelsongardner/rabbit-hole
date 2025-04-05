@@ -22,9 +22,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Configure port
 app.config['SERVER_PORT'] = 2001
 
+
 @app.route('/search', methods=['POST'])
 def search():
-
     print("Got request to search for videos")
 
     data = request.get_json()
@@ -32,12 +32,10 @@ def search():
         return jsonify({'error': 'Both "message" and "schema" fields are required'}), 400
 
     search = data['search']
-
     violence = data['violence']
     sexuality = data['sexuality']
     bodynegativity = data['bodynegativity']
     advertisements = data['advertisements']
-
     topic = data['topic']
     last = data['last']
 
@@ -45,8 +43,11 @@ def search():
     distracted = False
 
     try:
-        
         videos, appropriate, distracted = youtube_search(search, last, topic, violence, sexuality, bodynegativity, advertisements)
+
+        # Convert set to list if videos is a set
+        if isinstance(videos, set):
+            videos = list(videos)
 
         try:
             # Convert the response to JSON
