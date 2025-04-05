@@ -76,13 +76,13 @@ const VideoList = ({ list, onVideoClick, onPlusClick, onBookMarkClick, onDeleteC
                         </div>
                         <p className="video-subtitle">{item.subtitle}</p>
                         <div className="button-container">
-                            <button onClick={() => onVideoClick(item)}>
+                            <button className="play-button" onClick={() => onVideoClick(item)}>
                                 Play
                             </button>
-                            <button onClick={() => onBookMarkClick(item)}>
+                            <button className="bookmark-button" onClick={() => onBookMarkClick(item)}>
                                 Bookmark
                             </button>
-                            <button onClick={() => onDeleteClick(item)}>
+                            <button className="delete-button" onClick={() => onDeleteClick(item)}>
                                 Delete
                             </button>
                         </div>

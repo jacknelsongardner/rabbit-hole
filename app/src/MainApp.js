@@ -10,8 +10,6 @@ import SearchResults from './SearchResults.js';
 
 import Popup from './Popup.js';
 
-import FruitPage from './FruitPage.js';
-
 import React, { useState } from 'react';
 
 import axios from 'axios';
