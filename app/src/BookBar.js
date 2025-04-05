@@ -18,11 +18,11 @@ const BookBar = ({ items, onItemClick, setItems}) => {
                 {items.map((item, index) => (
                     <div key={index}>
                         <li 
-                            onClick={() => handleClick(item)} 
+                            
                             className="sidebar-item" 
                             style={{ fontSize: '18px' }}
                         >
-                            <span style={{ float: 'left' }}>
+                            <span style={{ float: 'left' }} onClick={() => handleClick(item)} >
                                 {item.title}
                             </span>
                             <button 
